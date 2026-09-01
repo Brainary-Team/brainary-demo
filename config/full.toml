@@ -1,0 +1,54 @@
+# Every optional tool group turned on, pinned to multi-agent v1.
+#
+# The other profiles differ by *backend*; this one differs by *tool surface*. Demos 06-11 reach
+# for the optional groups on purpose, and under `v1-forced` most of them are simply absent -- a
+# demo can then only report "not configured" instead of showing the tool work.
+#
+# Backend pinning is identical to v1-forced (model_catalog_json is the only lever that can force
+# v1; see that file). What this profile adds is the gates:
+#
+#   clock__curr_time         [features.current_time_reminder]
+#   get_context_remaining    [features] token_budget
+#   request_permissions      [features] request_permissions_tool, and an environment must exist
+#   memories__* (4 tools)    [features] memories AND [memories] dedicated_tools
+#                            -- both, or you get zero memory tools rather than a partial set
+#
+# `goals` and `update_plan` are on by default and need nothing here.
+#
+# Demos that write (apply_patch in 08, memories in 10) also need a writable sandbox, which is
+# env-driven and therefore not in this file:
+#
+#   CODEX_DEMO_SANDBOX=workspace-write ./run.sh demos/08_file_and_image.js full
+#
+# NOTE: model_catalog_json must appear before any [table] or TOML folds it into that table.
+model = "__MODEL__"
+model_provider = "demo"
+model_catalog_json = "__CATALOG__"
+approval_policy = "never"
+sandbox_mode = "__SANDBOX_MODE__"
+suppress_unstable_features_warning = true
+
+[model_providers.demo]
+name = "demo"
+base_url = "__BASE_URL__"
+env_key = "OPENAI_API_KEY"
+wire_api = "__WIRE_API__"
+
+# Boolean-form features. Writing one of these as a table ("expected boolean, found map") reports
+# a line number pointing at an unrelated table, so keep the two forms apart.
+[features]
+memories = true
+token_budget = true
+request_permissions_tool = true
+
+[features.code_mode]
+enabled = true
+
+# Table-form feature. `sleep_tool` is deliberately left off: the sleep tool is DirectModelOnly,
+# so turning it on adds a tool the program cannot call anyway.
+[features.current_time_reminder]
+enabled = true
+
+# Second half of the memories gate. Without it the extension registers no tools at all.
+[memories]
+dedicated_tools = true

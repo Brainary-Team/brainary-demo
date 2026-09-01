@@ -1,0 +1,26 @@
+# Multi-agent v2 profile.
+#
+# v2 tools are DirectModelOnly by default, so they never reach code mode; the demos
+# need non_code_mode_only = false. v2's thread cap also counts the root thread, so the
+# default of 4 leaves room for only 3 subagents.
+#
+# __MODEL__ and __BASE_URL__ are substituted by run.sh from the environment.
+model = "__MODEL__"
+model_provider = "demo"
+approval_policy = "never"
+sandbox_mode = "__SANDBOX_MODE__"
+suppress_unstable_features_warning = true
+
+[model_providers.demo]
+name = "demo"
+base_url = "__BASE_URL__"
+env_key = "OPENAI_API_KEY"
+wire_api = "__WIRE_API__"
+
+[features.code_mode]
+enabled = true
+
+[features.multi_agent_v2]
+enabled = true
+non_code_mode_only = false
+max_concurrent_threads_per_session = 8

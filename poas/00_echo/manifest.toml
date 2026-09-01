@@ -1,0 +1,18 @@
+# Smallest package that exercises the whole capability path:
+# manifest -> bundled stdio MCP -> registered on this thread -> visible to the CoT program.
+#
+# Structure follows brainary's own PoA manifest. `runtime` is provisional: it marks the body
+# as JavaScript for Codex's V8 host rather than wasm, and is not fixed yet.
+[poa]
+name = "echo_expert"
+version = "0.1.0"
+runtime = "codex-v8"
+poa_api_version = 1
+entry = "main.js"
+description = "Verify that a PoA can ship and call its own MCP server."
+
+[[capabilities.mcp]]
+name = "echo"
+type = "stdio"
+shell = "node mcp/echo.mjs"
+description = "Return pong for deterministic testing."

@@ -1,0 +1,20 @@
+# Multi-agent v1 profile.
+#
+# v1 subagent tools reach code mode with no extra flags. Whether a thread actually
+# resolves to v1 is decided by model metadata, not by this file -- see README.
+#
+# __MODEL__ and __BASE_URL__ are substituted by run.sh from the environment.
+model = "__MODEL__"
+model_provider = "demo"
+approval_policy = "never"
+sandbox_mode = "__SANDBOX_MODE__"
+suppress_unstable_features_warning = true
+
+[model_providers.demo]
+name = "demo"
+base_url = "__BASE_URL__"
+env_key = "OPENAI_API_KEY"
+wire_api = "__WIRE_API__"
+
+[features.code_mode]
+enabled = true

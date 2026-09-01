@@ -1,0 +1,25 @@
+# Multi-agent v1, pinned regardless of model metadata.
+#
+# Backend selection normally comes from `model_info.multi_agent_version`, and no feature
+# flag can force V1 (the override only yields V2 or Disabled). `model_catalog_json`
+# replaces the process catalog, which is the one lever that can.
+#
+# run.sh regenerates __CATALOG__ from vendor/models.json on every run, so refreshing that
+# file is all it takes to pick up new models.
+#
+# NOTE: model_catalog_json must appear before any [table] or TOML folds it into that table.
+model = "__MODEL__"
+model_provider = "demo"
+model_catalog_json = "__CATALOG__"
+approval_policy = "never"
+sandbox_mode = "__SANDBOX_MODE__"
+suppress_unstable_features_warning = true
+
+[model_providers.demo]
+name = "demo"
+base_url = "__BASE_URL__"
+env_key = "OPENAI_API_KEY"
+wire_api = "__WIRE_API__"
+
+[features.code_mode]
+enabled = true

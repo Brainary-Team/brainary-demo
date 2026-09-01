@@ -1,0 +1,11 @@
+.home/
+__pycache__/
+
+# Provider credentials. `.env.example` is the tracked template.
+.env
+
+# Where the runtime binaries (codex, codex-code-mode-host) get unpacked.
+bin/
+
+# `poas/build.sh` writes here by default.
+*.poa

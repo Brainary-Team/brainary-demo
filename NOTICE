@@ -1,0 +1,15 @@
+Brainary Codex PoA Demos
+Copyright 2026 Brainary
+
+Licensed under the Apache License, Version 2.0. See LICENSE.
+
+This repository contains example Programs of Agent, a packaging script, and a minimal
+JSON-RPC client for the Brainary PoA runtime. The runtime itself is distributed
+separately as prebuilt binaries and is not included here.
+
+The Brainary PoA runtime is derived from OpenAI Codex
+(https://github.com/openai/codex), licensed under the Apache License, Version 2.0.
+Copyright 2025 OpenAI.
+
+`vendor/models.json` is a verbatim copy of the model catalog bundled with that runtime
+and carries the same copyright and license.
