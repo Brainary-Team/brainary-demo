@@ -9,3 +9,6 @@ bin/
 
 # `poas/build.sh` writes here by default.
 *.poa
+
+# Editor scratch directory.
+.vmark/
