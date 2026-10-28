@@ -158,6 +158,32 @@ poas/build.sh poas/00_echo dist/echo.poa  # 指定输出路径
 
 包格式、清单字段及编写方式参见开发文档[《打包与分发》](https://github.com/Brainary-Team/brainary-codex-docs/blob/main/08-packaging.md)。
 
+### 3.3 在 TUI 主对话里调用已安装的 PoA
+
+`poas/01_tui_call` 是一个无参数的包。安装后，`thread/start` 会从 `$CODEX_HOME/poas` 载入它，主对话里的工具名是 `poa.tui_call`。TUI 和 `exec --poa` 都会先启动线程，因此使用同一个 `CODEX_HOME`。
+
+```bash
+./poas/01_tui_call/install.sh
+set -a && source .env && set +a
+export CODEX_HOME="${CODEX_HOME:-$PWD/.home/v1-forced}"
+```
+
+`tui_call` 会先派一个子智能体请求 `https://ipinfo.io/json` 取得城市，再派第二个子智能体按该城市请求 `https://wttr.in`。当前 profile 的 `read-only` 沙箱默认不出网，所以下面两条命令都要加 `-s danger-full-access`。这个取值取消沙箱隔离，只作用于这一次启动。
+
+进入 TUI，在新会话输入 `请调用已安装的 tui_call PoA`：
+
+```bash
+./bin/codex -s danger-full-access
+```
+
+直接执行已安装目录：
+
+```bash
+./bin/codex exec --poa "$CODEX_HOME/poas/01_tui_call" -s danger-full-access
+```
+
+成功标志是输出里同时有 ipinfo 返回的城市，以及 wttr.in 返回的天气原文。`exec --poa` 按路径执行这个包，会打两次模型。主对话里的发现和调用以 TUI 那条为准。不要用 `./run.sh` 代替：它会改写 `.home/<profile>`，而且 `.js` 用例不走已安装目录。
+
 ## 4. 目录结构
 
 ```

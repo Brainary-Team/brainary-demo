@@ -1,0 +1,10 @@
+# Installed into $CODEX_HOME/poas and called from the TUI main conversation.
+# No MCP server and no input schema: the model calls `poa.tui_call` with {}.
+[poa]
+namespace = "brainary"
+name = "tui_call"
+version = "0.1.0"
+runtime = "codex-v8"
+poa_api_version = 1
+entry = "main.js"
+description = "Installed demo PoA. Call this when the user asks to run tui_call. It looks up the current location, then looks up the weather there. Takes no arguments."
